@@ -31,10 +31,11 @@ const App = ()=> {
           <ul>
             {
               users.map( user => {
-                const usersPets = pets.filter(pet => pet_user_id === user.id);
+                const usersPets = pets.filter(pet => pet.user_id === user.id);
                 return (
                   <li key={ user.id }>
                     { user.name }
+                    ({ usersPets.length })
                   </li>
                 );
               })
@@ -49,6 +50,17 @@ const App = ()=> {
                 return (
                   <li key={ pet.id }>
                     { pet.name }
+                    <ul>
+                      {
+                        users.map( user => {
+                          return (
+                            <li key={ user.id } className={ pet.user_id === user.id ? 'owner': '' }>
+                              { user.name }
+                            </li>
+                          );
+                        })
+                      }
+                    </ul>
                   </li>
                 );
               })

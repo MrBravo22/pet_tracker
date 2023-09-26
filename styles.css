@@ -9,3 +9,6 @@ main {
 main > * {
   flex:1;
 }
+.owner {
+  border: solid 2px dodgerblue;
+}

@@ -18,7 +18,7 @@ app.get('/dist/main.js.map', (req, res)=> res.sendFile(reactSourceMap));
 const styleSheet = path.join(__dirname, 'styles.css');
 app.get('/styles.css', (req, res)=> res.sendFile(styleSheet));
 
-app.put('/api/things/:id', async (req, res, next) => {
+app.put('/api/pets/:id', async (req, res, next) => {
   try {
     const SQL =`
     UPDATE pets
@@ -36,7 +36,7 @@ app.put('/api/things/:id', async (req, res, next) => {
 
 app.get('/api/pets', async(req, res, next) => {
   try{
-    const response = await client.query('SELECT * FROM pets');
+    const response = await client.query('SELECT * FROM pets ORDER BY name');
     res.send(response.rows);
   }
   catch(ex){

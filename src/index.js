@@ -22,6 +22,20 @@ const App = ()=> {
     fetchPets();
   }, []);
 
+  const addOwner = async (pet, user) => {
+      pet = { ...pet, user_id: user.id };
+      const response = await axios.put(`/api/pets/${pet.id}`, pet);
+      pet = response.data;
+      setPets(pets.map(_pet => _pet.id === pet.id ? pet : _pet));
+  };
+
+  const removeOwner = async (pet) => {
+    pet = { ...pet, user_id: null };
+    const response = await axios.put(`/api/pets/${pet.id}`, pet);
+    pet = response.data;
+    setPets(pets.map(_pet => _pet.id === pet.id ? pet : _pet));
+};
+
   return (
     <div>
       <h1>Pet Tracker</h1>
@@ -56,6 +70,13 @@ const App = ()=> {
                           return (
                             <li key={ user.id } className={ pet.user_id === user.id ? 'owner': '' }>
                               { user.name }
+                              {
+                                pet.user_id === user.id ? (
+                                  <button onClick={ () => removeOwner(pet)}>Remove</button>
+                                ): (
+                                  <button onClick={ () => addOwner(pet, user)}>Add</button>
+                                )
+                              }
                             </li>
                           );
                         })
